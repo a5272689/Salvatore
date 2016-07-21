@@ -1,0 +1,59 @@
+{% extends "headfoot.html" %}
+{% block middle %}
+    <link rel="stylesheet" href="/static/css/bootstrap-table/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/static/css/custom/parts/netlist.css"/>
+    <div class="body_headfoot">
+    <div class="vetically_table">
+    <div class="adddelcheck">
+        <button class="btn btn-default" id="info_add">新增</button>
+        <button class="btn btn-danger" id="info_del">删除</button>
+        <div class="pull-right">
+            <label>网络端口型号：</label>
+            <input id="seach_model" type="text"/>
+            <button class="btn btn-primary" id="list_check">查询</button>
+        </div>
+    </div>
+    <div class="margin_top"><table id="list_table"></table></div>
+    </div>
+    </div>
+    <div class="fullscreendiv">
+    <div id="adddiv" class="addchangeinfo">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="j-title"></h4>
+        </div>
+        <div class="modal-body addchangeform">
+            <div><span class="required">*</span><label>网络端口型号：</label>
+            <input class="floatright" id="j-model" type="text"/>
+            <input id="j-oldid" type="hidden"/></div>
+            <div><label>序列号：</label>
+            <input class="floatright" id="j-sn" type="text"/></div>
+            <div><label>网络端口名称：</label>
+            <input class="floatright" id="j-name" type="text"/></div>
+            <div><label>MAC地址：</label>
+            <input class="floatright" id="j-mac" type="text"/></div>
+            <div><label>IP地址：</label>
+            <input class="floatright" id="j-ip" type="text"/></div>
+            <div><label>传输速率 Mbps：</label>
+            <select class="floatright fixedwith" id="j-nowspeed">
+                <option value="100">100Mbps</option>
+                <option value="1000">1000Mbps</option>
+                <option value="10000">10000Mbps</option>
+            </select></div>
+            <div><label>厂家：</label>
+            <input class="floatright" id="j-manufactor" type="text"/></div>
+            <div><label>备注：</label>
+            <input class="floatright" id="j-remarks" type="text"/></div>
+            <div><label>所在资产：</label>
+            <select class="floatright fixedwith" size="4" id="j-asset_id"></select></div>
+            <p class="form_warning"></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="info_handle"></button>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/custom/parts/netlist.js"></script>
+{% endblock %}

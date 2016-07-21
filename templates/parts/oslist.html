@@ -1,0 +1,51 @@
+{% extends "headfoot.html" %}
+{% block middle %}
+    <link rel="stylesheet" href="/static/css/bootstrap-table/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/static/css/custom/parts/oslist.css"/>
+    <div class="body_headfoot">
+    <div class="vetically_table">
+    <div class="adddelcheck">
+        <button class="btn btn-default" id="info_add">新增</button>
+        <button class="btn btn-danger" id="info_del">删除</button>
+        <div class="pull-right">
+            <label>操作系统分类：</label>
+            <select id="seach_os_class">
+                <option value="-1">请选择</option>
+            </select>
+            <label>操作系统版本：</label>
+            <input id="seach_version" type="text"/>
+            <button class="btn btn-primary" id="list_check">查询</button>
+        </div>
+    </div>
+    <div class="margin_top"><table id="list_table"></table></div>
+    </div>
+    </div>
+    <div class="fullscreendiv">
+    <div id="adddiv" class="addchangeinfo">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="j-title"></h4>
+        </div>
+        <div class="modal-body addchangeform">
+            <div><span class="required">*</span><label>操作系统分类：</label>
+            <select class="floatright fixedwith" id="j-os_class"></select>
+            <input id="j-oldid" type="hidden"/></div>
+            <div><span class="required">*</span><label>版本：</label>
+            <input class="floatright" id="j-version" type="text"/></div>
+            <div><span class="required">*</span><label>位数：</label>
+            <select class="floatright fixedwith" id="j-bit"></select></div>
+            <div><label>备注：</label>
+            <input class="floatright" id="j-remarks" type="text"/></div>
+            <div><label>所在资产(多选)：</label>
+            <select class="floatright fixedwith" multiple="multiple" size="4" id="j-asset_ids"></select></div>
+            <p class="form_warning"></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="info_handle"></button>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/custom/parts/oslist.js"></script>
+{% endblock %}

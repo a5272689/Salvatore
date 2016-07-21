@@ -1,0 +1,38 @@
+
+.addchangeinfo {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;;
+    background-color: #ffffff;
+    margin: 30px auto;
+    width: 600px;
+    /*height: 2000px;*/
+    -moz-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    -webkit-border-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+.addchangeform {
+    width: 300px;
+    margin: auto;
+}
+.addchangeform >div {
+    overflow: hidden;
+}
+.addchangeform >div >label {
+    padding-left: 5px;
+    float: left;
+}
+.addchangeform >div >.floatright {
+    float: right;
+}
+.addchangeform >div >form >.fixedwith,
+.addchangeform >div >.fixedwith {
+    width: 168px;
+}
+.adddelcheck {
+    overflow: hidden;
+}
+.form_warning {
+    color: red;
+}

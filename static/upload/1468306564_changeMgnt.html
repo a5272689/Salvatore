@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+{% block middle %}
+
+<link rel="stylesheet" href="/static/css/bootstrapTable/bootstrap-table.min.css"/>
+<link rel="stylesheet" href="/static/css/jquery.datetimepicker.css"/>
+<link rel="stylesheet" href="/static/css/checkMgnt/changeMgnt.css"/>
+
+<div class="main-box j-main">
+    <div class="toolbar clearfix">
+        <label>更换时间：</label>
+        <input type="text" class="datepicker j-start" placeholder="开始日期"/>
+        <label>到</label>
+        <input type="text" class="datepicker j-end" placeholder="结束日期"/>
+        <label>配件类型：</label>
+        <select class="j-partType">
+            <option value="-1">请选择配件类型</option>
+        </select>
+        <label>配件编号：</label>
+        <input type="text" class="j-partID" placeholder="配件编号"/>
+        <div class="pull-right">
+            <button class="btn btn-primary j-search-change">查询</button>
+            <a class="btn btn-default" data-toggle="modal" data-target="#newChangeModal">新增</a>
+        </div>
+    </div>
+    <table class="j-check-table"></table>
+</div>
+<!--新增弹框-->
+<div class="modal fade" id="newChangeModal">
+    <div class="modal-dialog  new-change-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增更换记录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="check-form">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label class="name">配件名称:</label>
+                            <input class="partName" type="text" />
+                        </div>
+                        <div class="col-md-5">
+                            <label class="name">更换日期:</label>
+                            <input type="text" class="datepicker changeDate"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label class="name">所在机房:</label>
+                            <select class="roomID" ></select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="name">所在机柜:</label>
+                            <select class="cabinetID" ></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label class="name">所在机架:</label>
+                            <input type="text" class="rackNumber" />
+                        </div>
+                        <div class="col-md-5">
+                            <label class="name">配件类型:</label>
+                            <select class="partType" ></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label class="name">原序列号:</label>
+                            <input class="beforeSerial" type="text" />
+                        </div>
+                        <div class="col-md-5">
+                            <label class="name">现序列号:</label>
+                            <input class="partSerial" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5">
+                            <label class="name">更换人员:</label>
+                            <input class="changer" type="text" />
+                        </div>
+                        <div class="col-md-5">
+                            <label class="name">联系电话:</label>
+                            <input class="tel" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-11">
+                            <label class="name">更换原因:</label>
+                            <textarea  class="text-area whychange"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-11">
+                            <label class="name">备注:</label>
+                            <textarea  class="text-area" memo></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-2">
+                            <label class="name">照片:</label>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <label class="name">更换前:</label>
+                            <input class="beforePic" type="file"/>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <label class="name">更换后:</label>
+                            <input class="finishedPic" type="file"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary j-add-change">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script src="/static/js/lib/bootstrapTable/bootstrap-table.min.js"></script>
+<script src="/static/js/lib/bootstrapTable/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/js/lib/jquery.datetimepicker.js"></script>
+<script src="/static/js/cmn_resize.js"></script>
+<script src="/static/js/checkMgnt/changeMgnt.js"></script>
+{% endblock %}

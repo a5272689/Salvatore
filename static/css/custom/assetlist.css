@@ -1,0 +1,30 @@
+
+.allassetinfo {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;;
+    background-color: #ffffff;
+    margin: 30px auto;
+    width: 950px;
+    /*height: 2000px;*/
+    -moz-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    -webkit-border-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+.searchdiv {
+    overflow: auto;
+    margin-bottom: -15px;
+}
+
+.searchdiv >.pull-left {
+    margin-top: 10px;
+}
+
+.detailinfo{
+    margin-top: 16px;
+}
+#customtable > thead >tr > th,
+#customtable >tbody >tr > td{
+    text-align: center;
+}

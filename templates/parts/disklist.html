@@ -1,0 +1,60 @@
+{% extends "headfoot.html" %}
+{% block middle %}
+    <link rel="stylesheet" href="/static/css/bootstrap-table/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/static/css/custom/parts/disklist.css"/>
+    <div class="body_headfoot">
+    <div class="vetically_table">
+    <div class="adddelcheck">
+        <button class="btn btn-default" id="info_add">新增</button>
+        <button class="btn btn-danger" id="info_del">删除</button>
+        <div class="pull-right">
+            <label>硬盘型号：</label>
+            <input id="seach_model" type="text"/>
+            <button class="btn btn-primary" id="list_check">查询</button>
+        </div>
+    </div>
+    <div class="margin_top"><table id="list_table"></table></div>
+    </div>
+    </div>
+    <div class="fullscreendiv">
+    <div id="adddiv" class="addchangeinfo">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="j-title"></h4>
+        </div>
+        <div class="modal-body addchangeform">
+            <div><span class="required">*</span><label>硬盘型号：</label>
+            <input class="floatright" id="j-model" type="text"/>
+            <input id="j-oldid" type="hidden"/></div>
+            <div><label>序列号：</label>
+            <input class="floatright" id="j-sn" type="text"/></div>
+            <div><span class="required">*</span><label>容量 GB：</label>
+            <input class="floatright" id="j-capacity" type="text"/></div>
+            <div><label>硬盘类型：</label>
+            <select class="floatright fixedwith" id="j-type">
+                <option value="机械硬盘">机械硬盘</option>
+                <option value="固态硬盘">固态硬盘</option>
+            </select></div>
+            <div><label>转速：</label>
+            <input class="floatright" id="j-nowspeed" type="text"/></div>
+            <div><label>槽位：</label>
+            <input class="floatright" id="j-slot" type="text"/></div>
+            <div><label>接口：</label>
+            <input class="floatright" id="j-interface" type="text"/></div>
+            <div><label>厂家：</label>
+            <input class="floatright" id="j-manufactor" type="text"/></div>
+            <div><label>备注：</label>
+            <input class="floatright" id="j-remarks" type="text"/></div>
+            <div><label>所在资产：</label>
+            <select class="floatright fixedwith" size="4" id="j-asset_id"></select></div>
+            <p class="form_warning"></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="info_handle"></button>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/custom/parts/disklist.js"></script>
+{% endblock %}

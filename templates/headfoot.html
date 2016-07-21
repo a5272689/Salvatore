@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salvatore-{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/custom/headfoot.css"/>
+
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div id="totaldiv">
+    <div class="head_headfoot">
+    <div class="nav_headfoot">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Salvatore</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/" {% if index %}class="a_activation"{% endif %}>首页</a></li>
+                <li><a href="/assetlist/" {% if asset %}class="a_activation"{% endif %}>资产管理</a></li>
+                <li class="dropdown">
+                    <a href="#" id="dropdown_parts" class="dropdown-toggle {% if parts %}a_activation{% endif %}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">资产部件管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/CPU/">CPU</a></li>
+{#                        <li role="separator" class="divider"></li>#}
+                        <li><a href="/MEM/">内存</a></li>
+                        <li><a href="/disk/">硬盘</a></li>
+                        <li><a href="/net/">网络端口</a></li>
+                        <li><a href="/otherpart/">其他部件</a></li>
+                        <li><a href="/OS/">操作系统</a></li>
+                        <li><a href="/app/">应用程序</a></li>
+                        <li><a href="/database/">数据库</a></li>
+                        <li><a href="/middleware/">中间件</a></li>
+{#                        <li role="separator" class="divider"></li>#}
+{#                        <li><a href="#">Separated link</a></li>#}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" id="dropdown_others" class="dropdown-toggle {% if others %}a_activation{% endif %}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">资产其他相关管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/assetadmin/">资产管理员</a></li>
+                        <li><a href="/room/">IDC</a></li>
+                        <li><a href="/seat/">机架</a></li>
+                        <li><a href="/business/">业务线</a></li>
+                        <li><a href="/pact/">合同</a></li>
+                        <li><a href="/assetfclass/">资产一级分类</a></li>
+                        <li><a href="/assetsclass/">资产二级分类</a></li>
+{#                        <li role="separator" class="divider"></li>#}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% block middle %}{% endblock %}
+<div class="foot_headfoot"><p class="foottext_headfoot">@ 2016 Salvatore. All rights reserved.</p></div>
+</div>
+<script src="/static/js/custom/headfoot.js"></script>
+</body>
+</html>

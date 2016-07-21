@@ -1,0 +1,62 @@
+{% extends "headfoot.html" %}
+{% block middle %}
+    <link rel="stylesheet" href="/static/css/bootstrap-table/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/static/css/custom/assetlist.css"/>
+    <div class="body_headfoot">
+    <div class="vetically_table">
+    <div class="searchdiv">
+        <div class="pull-left">
+            <label>资产一级分类：</label>
+            <select id="seach_assetfclass"><option value="-1">请选择</option></select>
+            <label>资产二级分类：</label>
+            <select id="seach_assetsclass"><option value="-1">请选择</option></select>
+            <label>IDC：</label>
+            <select id="seach_room"><option value="-1">请选择</option></select>
+            <label>机架：</label>
+            <select id="seach_seat"><option value="-1">请选择</option></select>
+            <label>资产名称：</label>
+            <input id="seach_name" type="text" placeholder="资产名称"/>
+            <label>序列号：</label>
+            <input id="seach_sn" type="text" placeholder="序列号"/>
+            </select>
+        </div>
+        <div class="pull-right" id="j-tmpdata" data-flag="{{ data_flag }}" data-flagid="{{ data_flagid }}">
+            <button class="btn btn-primary" id="assetlist_check">查询</button>
+        </div>
+    </div>
+    <div id="toolbar">
+        <button class="btn btn-default" id="info_add">新增</button>
+        <button class="btn btn-danger" id="info_del">删除</button>
+    </div>
+    <div class="margin_top"><table id="list_table"></table></div>
+    </div>
+    </div>
+    <div class="fullscreendiv">
+    <div class="allassetinfo">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="j-title"></h4>
+        </div>
+        <div class="modal-body" id="detaildiv">
+            <ul class="nav nav-tabs tabs_leftpadding">
+              <li id='baseinfo' class="active activetabs"><a href="javascript:;" data-cat="baseinfo">基本信息</a></li>
+              <li id='hardwareinfo' ><a href="javascript:;" data-cat="hardwareinfo">硬件信息</a></li>
+              <li id="softinfo" ><a href="javascript:;" data-cat="softinfo">软件信息</a></li>
+            </ul>
+            <input type="hidden" id="detailinfo_index">
+            <div class="detailinfo">
+            </div>
+        </div>
+        <div class="modal-body" id="handlediv">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="info_handle"></button>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/static/js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/static/js/custom/assetlist.js"></script>
+    <script src="/static/js/laydate/laydate.js"></script>
+{% endblock %}
