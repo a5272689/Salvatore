@@ -5,11 +5,41 @@
     border-radius: 6px;;
     background-color: #ffffff;
     margin: 30px auto;
-    width: 950px;
+    width: 900px;
     /*height: 2000px;*/
     -moz-box-shadow: 0 5px 15px rgba(0,0,0,.5);
     box-shadow: 0 5px 15px rgba(0,0,0,.5);
     -webkit-border-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+
+
+.addchangeformdiv {
+    width: 290px;
+    float: left;
+    padding: 0 10px 0 0;
+}
+.addchangeformdiv >div {
+    overflow: auto;
+}
+.addchangeformdiv >div >label {
+    margin-left: 5px;
+    float: left;
+}
+
+.addchangeformdiv >div >input,
+.addchangeformdiv >div >select {
+    float: right;
+    width: 168px;
+}
+
+.addchangeformdiv >div >select {
+    float: right;
+    width: 168px;
+}
+
+.addchangeformdiv >div >select[size] {
+    margin-bottom: 10px;
 }
 
 .searchdiv {
@@ -27,4 +57,7 @@
 #customtable > thead >tr > th,
 #customtable >tbody >tr > td{
     text-align: center;
+}
+.form_warning {
+    color: red;
 }

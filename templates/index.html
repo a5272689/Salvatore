@@ -1,0 +1,16 @@
+{% extends "headfoot.html" %}
+{% block middle %}
+    <link rel="stylesheet" href="/static/css/bootstrap-table/bootstrap-table.min.css"/>
+    <link rel="stylesheet" href="/static/css/custom/index.css"/>
+    <div class="body_headfoot">
+    <div class="leftcharts">
+    <div id="index_chart" class="allcharts"></div>
+    <div id="idc_chart" class="allcharts"></div>
+    </div>
+    <div class="rightcharts">
+        <div id="allob_chart" class="allrightcharts"></div>
+    </div>
+    </div>
+    <script src="/static/js/echarts/echarts.min.js"></script>
+    <script src="/static/js/custom/index.js"></script>
+{% endblock %}

@@ -48,7 +48,113 @@
             </div>
         </div>
         <div class="modal-body" id="handlediv">
-
+            <input type="hidden" id="j-oldid">
+            <div style="overflow: auto">
+                <div class="addchangeformdiv">
+                    <div>
+                        <span class="required">*</span>
+                        <label>资产名称：</label>
+                        <input id="j-name" type="text">
+                    </div>
+                    <div>
+                        <label>资产序列号：</label>
+                        <input id="j-sn" type="text">
+                    </div>
+                    <div>
+                        <label>生产厂家：</label>
+                        <input id="j-manufactor" type="text">
+                    </div>
+                    <div>
+                        <label>价格：</label>
+                        <input id="j-price" type="text">
+                    </div>
+                    <div>
+                        <label>购买日期：</label>
+                        <input id="j-purchasing_date" onclick="laydate()">
+                    </div>
+                    <div>
+                        <label>出保日期：</label>
+                        <input id="j-warranty_date" onclick="laydate()">
+                    </div>
+                    <div>
+                        <label>备注：</label>
+                        <input id="j-remarks" type="text">
+                    </div>
+                    <div>
+                        <span class="required">*</span>
+                        <label>一级分类：</label>
+                        <select id="j-assetfclass"></select>
+                    </div>
+                    <div>
+                        <span class="required">*</span>
+                        <label>二级分类：</label>
+                        <select id="j-assetsclass"><option value="-1">请选择</option></select>
+                    </div>
+                    <div>
+                        <span class="required">*</span>
+                        <label>IDC：</label>
+                        <select id="j-idc"></select>
+                    </div>
+                    <div>
+                        <span class="required">*</span>
+                        <label>机架：</label>
+                        <select id="j-seat"><option value="-1">请选择</option></select>
+                    </div>
+                    <div>
+                        <label>管理员：</label>
+                        <select id="j-assets_admin"></select>
+                    </div>
+                    <div>
+                        <label>业务线：</label>
+                        <select id="j-business"></select>
+                    </div>
+                    <div>
+                        <label>合同：</label>
+                        <select id="j-pact"></select>
+                    </div>
+                </div>
+                <div class="addchangeformdiv">
+                    <div>
+                        <label>CPU(多选):</label>
+                        <select id="j-cpu" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>内存(多选):</label>
+                        <select id="j-mem" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>硬盘(多选):</label>
+                        <select id="j-disk" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>网络端口(多选):</label>
+                        <select id="j-net" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>其它部件(多选):</label>
+                        <select id="j-otherpart" size="4" multiple="multiple"></select>
+                    </div>
+                </div>
+                <div class="addchangeformdiv">
+                    <div>
+                        <label>操作系统(多选):</label>
+                        <select id="j-os" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>应用程序(多选):</label>
+                        <select id="j-app" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>数据库(多选):</label>
+                        <select id="j-database" size="4" multiple="multiple"></select>
+                    </div>
+                    <div>
+                        <label>中间件(多选):</label>
+                        <select id="j-middleware" size="4" multiple="multiple"></select>
+                    </div>
+                </div>
+            </div>
+            <p class="form_warning"></p>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" id="info_handle"></button>

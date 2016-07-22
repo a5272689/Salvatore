@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 #author:hjd
 from silas import models
+from datetime import datetime
 
 def makeroomdic():
     rooms=models.Room.objects.all()
@@ -43,13 +44,121 @@ def makeassetadmindic():
                                                       'qq':assetadmin_ob.qq,'email':assetadmin_ob.email}
     return assetadmindic
 
+
+
+
+
+
 def delassets(jsondata):
-    models.Assets.objects.filter(assets_id__in=jsondata['rows']).delete()
+    asset_obs =models.Assets.objects.filter(assets_id__in=jsondata['rows'])
+    for asset_ob in asset_obs:
+        asset_ob.cpu_set.remove(*asset_ob.cpu_set.all())
+        asset_ob.mem_set.remove(*asset_ob.mem_set.all())
+        asset_ob.net_set.remove(*asset_ob.net_set.all())
+        asset_ob.disk_set.remove(*asset_ob.disk_set.all())
+        asset_ob.otherpart_set.remove(*asset_ob.otherpart_set.all())
+        asset_ob.os_set.remove(*asset_ob.os_set.all())
+        asset_ob.app_set.remove(*asset_ob.app_set.all())
+        asset_ob.database_set.remove(*asset_ob.database_set.all())
+        asset_ob.middleware_set.remove(*asset_ob.middleware_set.all())
+    asset_obs.delete()
     return {'result':1}
 
+def addasset(jsondata):
+    try:
+        purchasing_date=jsondata.get('purchasing_date')
+        warranty_date=jsondata.get('warranty_date')
+        pact=jsondata.get('pact')
+        assets_admin=jsondata.get('assets_admin')
+        business=jsondata.get('business')
+        if assets_admin:
+            assets_admin=models.AssetsAdmin.objects.get(assets_admin_id=assets_admin)
+        if business:
+            business=models.Business.objects.get(business_id=business)
+        if pact:
+            pact=models.Pact.objects.get(pacr_id=pact)
+        if warranty_date:
+            warranty_date=datetime.strptime(warranty_date,'%Y-%m-%d').date()
+        if purchasing_date:
+            purchasing_date=datetime.strptime(purchasing_date,'%Y-%m-%d').date()
+        asset_ob=models.Assets.objects.get_or_create(
+            name=jsondata['name'],sn=jsondata.get('sn'),manufactor=jsondata.get('manufactor'),
+            seat=models.Seat.objects.get(seat_id=jsondata['seat']),
+            assetsclass_id=models.AssetSClass.objects.get(assetsclass_id=jsondata['assetsclass']),
+            remarks=jsondata.get('remarks'),price=jsondata.get('price'),
+            purchasing_date=purchasing_date,warranty_date=warranty_date,
+            pact=pact,assets_admin=assets_admin,business=business
+        )
+        if asset_ob[1]:
+            asset_ob=asset_ob[0]
+            asset_ob.cpu_set.add(*models.CPU.objects.filter(CPU_id__in=jsondata['cpu']))
+            asset_ob.mem_set.add(*models.MEM.objects.filter(MEM_id__in=jsondata['mem']))
+            asset_ob.net_set.add(*models.Net.objects.filter(net_id__in=jsondata['net']))
+            asset_ob.disk_set.add(*models.Disk.objects.filter(disk_id__in=jsondata['disk']))
+            asset_ob.otherpart_set.add(*models.OtherPart.objects.filter(other_part_id__in=jsondata['otherpart']))
+            asset_ob.os_set.add(*models.OS.objects.filter(os_id__in=jsondata['os']))
+            asset_ob.app_set.add(*models.App.objects.filter(app_id__in=jsondata['app']))
+            asset_ob.database_set.add(*models.Database.objects.filter(database_id__in=jsondata['database']))
+            asset_ob.middleware_set.add(*models.Middleware.objects.filter(middleware_id__in=jsondata['middleware']))
+        else:
+            raise Exception(' ')
+    except:
+        return {'result':0}
+    else:
+        return {'result':1}
+
+def changeasset(jsondata):
+    try:
+        purchasing_date=jsondata.get('purchasing_date')
+        warranty_date=jsondata.get('warranty_date')
+        pact=jsondata.get('pact')
+        assets_admin=jsondata.get('assets_admin')
+        business=jsondata.get('business')
+        if assets_admin:
+            assets_admin=models.AssetsAdmin.objects.get(assets_admin_id=assets_admin)
+        if business:
+            business=models.Business.objects.get(business_id=business)
+        if pact:
+            pact=models.Pact.objects.get(pacr_id=pact)
+        if warranty_date:
+            warranty_date=datetime.strptime(warranty_date,'%Y-%m-%d').date()
+        if purchasing_date:
+            purchasing_date=datetime.strptime(purchasing_date,'%Y-%m-%d').date()
+        asset_ob=models.Assets.objects.get(assets_id=jsondata['id'])
+        asset_ob.cpu_set.remove(*asset_ob.cpu_set.all())
+        asset_ob.cpu_set.add(*models.CPU.objects.filter(CPU_id__in=jsondata['cpu']))
+        asset_ob.mem_set.remove(*asset_ob.mem_set.all())
+        asset_ob.mem_set.add(*models.MEM.objects.filter(MEM_id__in=jsondata['mem']))
+        asset_ob.net_set.remove(*asset_ob.net_set.all())
+        asset_ob.net_set.add(*models.Net.objects.filter(net_id__in=jsondata['net']))
+        asset_ob.disk_set.remove(*asset_ob.disk_set.all())
+        asset_ob.disk_set.add(*models.Disk.objects.filter(disk_id__in=jsondata['disk']))
+        asset_ob.otherpart_set.remove(*asset_ob.otherpart_set.all())
+        asset_ob.otherpart_set.add(*models.OtherPart.objects.filter(other_part_id__in=jsondata['otherpart']))
+        asset_ob.os_set.remove(*asset_ob.os_set.all())
+        asset_ob.os_set.add(*models.OS.objects.filter(os_id__in=jsondata['os']))
+        asset_ob.app_set.remove(*asset_ob.app_set.all())
+        asset_ob.app_set.add(*models.App.objects.filter(app_id__in=jsondata['app']))
+        asset_ob.database_set.remove(*asset_ob.database_set.all())
+        asset_ob.database_set.add(*models.Database.objects.filter(database_id__in=jsondata['database']))
+        asset_ob.middleware_set.remove(*asset_ob.middleware_set.all())
+        asset_ob.middleware_set.add(*models.Middleware.objects.filter(middleware_id__in=jsondata['middleware']))
+        models.Assets.objects.filter(assets_id=jsondata['id']).update(
+            name=jsondata['name'],sn=jsondata.get('sn'),manufactor=jsondata.get('manufactor'),
+            seat=models.Seat.objects.get(seat_id=jsondata['seat']),
+            assetsclass_id=models.AssetSClass.objects.get(assetsclass_id=jsondata['assetsclass']),
+            remarks=jsondata.get('remarks'),price=jsondata.get('price'),
+            purchasing_date=purchasing_date,warranty_date=warranty_date,
+            pact=pact,assets_admin=assets_admin,business=business
+        )
+    except:
+        return {'result':0}
+    else:
+        return {'result':1}
 
 def delassetadmins(jsondata):
     models.AssetsAdmin.objects.filter(assets_admin_id__in=jsondata['rows']).delete()
+
     return {'result':1}
 
 def addassetadmins(jsondata):

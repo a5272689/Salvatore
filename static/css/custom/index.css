@@ -1,0 +1,22 @@
+.allcharts{
+    width: 500px;
+    height: 400px;
+    padding: 10px;
+    border:1px solid #e7eaec;
+    border-radius:5px;
+    margin: 10px 10px 10px 10px;
+}
+.leftcharts{
+    float: left;overflow: auto
+}
+.rightcharts{
+    float: left;overflow: auto;min-width: 550px;
+}
+.allrightcharts{
+    width: auto;
+    height: 810px;
+    padding: 10px;
+    border:1px solid #e7eaec;
+    border-radius:5px;
+    margin: 10px 0 10px 10px;
+}

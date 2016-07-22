@@ -26,6 +26,40 @@ def upload(request):
                 result['filepath']='/%s' % (filepath)
     return JsonResponse(result)
 
+def fclasschartAPI(request):
+    fclass_obs=models.AssetFClass.objects.all()
+    fclass_list=[]
+    fclass_count=[]
+    for fclass_ob in fclass_obs:
+        fclass_list.append(fclass_ob.name)
+        fclass_count.append({'value':models.Assets.objects.filter(assetsclass_id__assetfclass_id=fclass_ob).count(),'name':fclass_ob.name})
+    return JsonResponse({'name':fclass_list,'value':fclass_count})
+
+def idcchartAPI(request):
+    room_obs=models.Room.objects.all()
+    room_list=[]
+    room_count=[]
+    for room_ob in room_obs:
+        room_list.append(room_ob.name)
+        room_count.append({
+            'value':models.Assets.objects.filter(seat__seat_room=room_ob).count(),
+            'name':room_ob.name
+        })
+    return JsonResponse({'name': room_list, 'value': room_count})
+
+def allobchartAPI(request):
+    assetnum=models.Assets.objects.all().count()
+    cpunum=models.CPU.objects.all().count()
+    memnum=models.MEM.objects.all().count()
+    disknum=models.Disk.objects.all().count()
+    netnum=models.Net.objects.all().count()
+    otherpartnum=models.OtherPart.objects.all().count()
+    osnum=models.OS.objects.all().count()
+    appnum=models.App.objects.all().count()
+    databasenum=models.Database.objects.all().count()
+    middlewarenum=models.Middleware.objects.all().count()
+    return JsonResponse({'num':[assetnum,cpunum,memnum,disknum,netnum,otherpartnum,osnum,appnum,databasenum,middlewarenum]})
+
 def assetlistAPI(request):
     getmethod=request.GET.get('method')
     if getmethod=='alllist':
@@ -174,13 +208,60 @@ def assetSAPI(request):
                                'port':middleware_ob.port,
                                'remarks':middleware_ob.remarks,'create_date':middleware_ob.create_date,
                                'update_date':middleware_ob.update_date})
+    print result
+    return JsonResponse(result)
+
+def nullHAPI(request):
+    cpu_obs=models.CPU.objects.filter(asset_id__isnull=True)
+    mem_obs = models.MEM.objects.filter(asset_id__isnull=True)
+    disk_obs = models.Disk.objects.filter(asset_id__isnull=True)
+    net_obs = models.Net.objects.filter(asset_id__isnull=True)
+    otherpart_obs = models.OtherPart.objects.filter(asset_id__isnull=True)
+    result={'cpu':{},'mem':{},'disk':{},'net':{},'otherpart':{}}
+    for cpu_ob in cpu_obs:
+        result['cpu'][cpu_ob.CPU_id]={'model':cpu_ob.model,
+                               'sn':cpu_ob.sn}
+    for mem_ob in mem_obs:
+        result['mem'][mem_ob.MEM_id]={'model':mem_ob.model,
+                               'sn':mem_ob.sn}
+    for disk_ob in disk_obs:
+        result['disk'][disk_ob.disk_id]={'model':disk_ob.model,
+                               'sn':disk_ob.sn}
+    for net_ob in net_obs:
+        result['net'][net_ob.net_id]={'model':net_ob.model,
+                               'sn':net_ob.sn,'name':net_ob.name}
+    for otherpart_ob in otherpart_obs:
+        result['otherpart'][otherpart_ob.other_part_id]={'model':otherpart_ob.model,
+                               'sn':otherpart_ob.sn,'name':otherpart_ob.name}
+    return JsonResponse(result)
+
+def SoftAPI(request):
+    os_obs=models.OS.objects.all()
+    app_obs=models.App.objects.all()
+    database_obs=models.Database.objects.all()
+    middleware_obs=models.Middleware.objects.all()
+    os_class_dic={}
+    bit_dic={}
+    for i in models.OS.os_class_dic:
+        os_class_dic[i[0]]=i[1]
+    for i in models.OS.bit_dic:
+        bit_dic[i[0]]=i[1]
+    result={'os':{},'app':{},'database':{},'middleware':{}}
+    for os_ob in os_obs:
+        result['os'][os_ob.os_id]={'os_class':os_class_dic[os_ob.os_class],'version':os_ob.version,'bit':bit_dic[os_ob.bit]}
+    for app_ob in app_obs:
+        result['app'][app_ob.app_id]={'name':app_ob.name,'version':app_ob.version,'port':app_ob.port,'language':app_ob.language}
+    for database_ob in database_obs:
+        result['database'][database_ob.database_id]={'name':database_ob.name,'version':database_ob.version,'port':database_ob.port}
+    for middleware_ob in middleware_obs:
+        result['middleware'][middleware_ob.middleware_id]={'name':middleware_ob.name,'version':middleware_ob.version,'port':middleware_ob.port}
     return JsonResponse(result)
 
 def assethandleAPI(request):
     themethod=request.GET.get('method')
-    methoddic={'del':utils.delassets}
+    methoddic={'del':utils.delassets,'add':utils.addasset,'change':utils.changeasset}
     result=methoddic[themethod](json.loads(request.body))
-    return JsonResponse({})
+    return JsonResponse(result)
 
 def assetadminAPI(request):
     if request.body:
@@ -689,7 +770,7 @@ def assetsclasshandleAPI(request):
     return JsonResponse(result)
 
 def index(request):
-    return render_to_response('headfoot.html',{'title':'首页','index':True})
+    return render_to_response('index.html',{'title':'首页','index':True})
 
 def assetlist(request):
     data={'title': '资产管理', 'asset':True}

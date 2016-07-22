@@ -49,6 +49,11 @@ function tabledate() {
         pactdic=res['pactdic'];
         if($('#seach_room').val()=='-1'){$('#seach_room').html(makeoption(roomdic));}
         if($('#seach_assetfclass').val()=='-1'){$('#seach_assetfclass').html(makeoption(assetclassdic));}
+        $('#j-assetfclass').html(makeoption(assetclassdic));
+        $('#j-idc').html(makeoption(roomdic));
+        $('#j-assets_admin').html(makeoption(assetadmindic));
+        $('#j-business').html(makeoption(businessdic));
+        $('#j-pact').html(makeoption(pactdic));
         return res;
     },
     columns:[
@@ -242,18 +247,232 @@ $('#seach_assetfclass').change(function () {
     $('#seach_assetsclass').html(newoption)
 });
 
+$('#j-assetfclass').change(function () {
+    var assetfclass=Number($('#j-assetfclass').val());
+    var newoption='<option value="-1">请选择</option>\n';
+    if (assetfclass!='-1'){
+        for(var key in assetclassdic[assetfclass].assetsclasss){
+            newoption=newoption+'<option value="'+key+'">'+assetclassdic[assetfclass].assetsclasss[key]+'</option>\n'
+        }
+    }
+    $('#j-assetsclass').html(newoption)
+});
+
+$('#j-idc').change(function () {
+    var idc=Number($('#j-idc').val());
+    var newoption='<option value="-1">请选择</option>\n';
+    if (idc!='-1'){
+        for(var key in roomdic[idc].seats){
+            newoption=newoption+'<option value="'+key+'">'+roomdic[idc].seats[key]+'</option>\n'
+        }
+    }
+    $('#j-seat').html(newoption)
+});
+
+function inithandlediv() {
+    $('#handlediv').find('input').val('');
+    $('#handlediv').find('select').val('-1');
+    $('.form_warning').text('');
+}
+
+function makeCMDoption(dic) {
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in dic){
+        newoption=newoption+'<option value="'+key+'">'+dic[key].model+' '+dic[key].sn+'</option>\n'
+    }
+    return newoption
+}
+
+function makeNOoption(dic) {
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in dic){
+        newoption=newoption+'<option value="'+key+'">'+dic[key].model+' '+dic[key].name+' '+dic[key].sn+'</option>\n'
+    }
+    return newoption
+}
+
+function makeOSoption(dic) {
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in dic){
+        newoption=newoption+'<option value="'+key+'">'+dic[key].os_class+' '+dic[key].version+' '+dic[key].bit+'</option>\n'
+    }
+    return newoption
+}
+
+function makeDMoption(dic) {
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in dic){
+        newoption=newoption+'<option value="'+key+'">'+dic[key].name+' '+dic[key].version+' '+dic[key].port+'</option>\n'
+    }
+    return newoption
+}
+
+function makeAPPoption(dic) {
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in dic){
+        newoption=newoption+'<option value="'+key+'">'+dic[key].name+' '+dic[key].version+' '+dic[key].port+' '+dic[key].language+'</option>\n'
+    }
+    return newoption
+}
+
+function makeSHnull() {
+    $.ajax({
+        url:'/nullHAPI/',
+        type:'get',
+        success:function (res) {
+            $('#j-cpu').html(makeCMDoption(res.cpu));
+            $('#j-mem').html(makeCMDoption(res.mem));
+            $('#j-disk').html(makeCMDoption(res.disk));
+            $('#j-net').html(makeNOoption(res.net));
+            $('#j-otherpart').html(makeNOoption(res.otherpart));
+        }
+    });
+    $.ajax({
+        url:'/SoftAPI/',
+        type:'get',
+        success:function (res) {
+            $('#j-os').html(makeOSoption(res.os));
+            $('#j-middleware').html(makeDMoption(res.middleware));
+            $('#j-database').html(makeDMoption(res.database));
+            $('#j-app').html(makeAPPoption(res.app));
+        }
+    });
+}
+
 function changeinfo(index) {
+    inithandlediv();
+    makeSHnull();
     $('#j-title').text('修改资产信息');
     $('#info_handle').text('提交修改');
     $('#detaildiv').attr('style','display: none');
     $('#handlediv').attr('style','display: block');
     $('.modal-footer').attr('style','display: block');
     var rowdata=$('#list_table').bootstrapTable('getData')[index];
+    $('#j-oldid').val(rowdata.id);
     $('.fullscreendiv').addClass('showdisplay');
-
+    $('#j-name').val(rowdata['name']);
+    $('#j-sn').val(rowdata['sn']);
+    $('#j-manufactor').val(rowdata['manufactor']);
+    $('#j-price').val(rowdata['price']);
+    $('#j-purchasing_date').val(rowdata['purchasing_date']);
+    $('#j-warranty_date').val(rowdata['warranty_date']);
+    $('#j-remarks').val(rowdata['remarks']);
+    $('#j-assetfclass').val(rowdata['assetfclass_id']);
+    var newoption='<option value="-1">请选择</option>\n';
+    for(var key in assetclassdic[rowdata['assetfclass_id']].assetsclasss){
+        newoption=newoption+'<option value="'+key+'">'+assetclassdic[rowdata['assetfclass_id']].assetsclasss[key]+'</option>\n'
+    }
+    $('#j-assetsclass').html(newoption);
+    $('#j-assetsclass').val(rowdata['assetsclass_id']);
+    $('#j-idc').val(rowdata['room_id']);
+    newoption='<option value="-1">请选择</option>\n';
+    for(var key in roomdic[rowdata['room_id']].seats) {
+        newoption = newoption + '<option value="' + key + '">' + roomdic[rowdata['room_id']].seats[key] + '</option>\n'
+    }
+    $('#j-seat').html(newoption);
+    $('#j-seat').val(rowdata['seat_id']);
+    if(rowdata['assets_admin_id']){$('#j-assets_admin').val(rowdata['assets_admin_id']);}
+    if(rowdata['business_id']){$('#j-business').val(rowdata['business_id']);}
+    if(rowdata['pact_id']){$('#j-pact').val(rowdata['pact_id']);}
+    $.ajax({
+        url: '/assetHAPI/',
+        data: {'asset_id': rowdata['id']},
+        type: 'get',
+        success: function (res) {
+            var newoption='',
+                newlist=[];
+            if (res.cpu.num){
+                for (var i in res.cpu.rows){
+                    newlist.push(res.cpu.rows[i].id);
+                    newoption=newoption+'<option value="'+res.cpu.rows[i].id+'">'+res.cpu.rows[i].model+' '+res.cpu.rows[i].sn+'</option>\n'
+                }
+            }
+            $('#j-cpu').append(newoption);
+            $('#j-cpu').val(newlist);
+            newoption='';
+            newlist=[];
+            if (res.mem.num){
+                for (var i in res.mem.rows){
+                    newlist.push(res.mem.rows[i].id);
+                    newoption=newoption+'<option value="'+res.mem.rows[i].id+'">'+res.mem.rows[i].model+' '+res.mem.rows[i].sn+'</option>\n'
+                }
+            }
+            $('#j-mem').append(newoption);
+            $('#j-mem').val(newlist);
+            newoption='';
+            newlist=[];
+            if (res.disk.num){
+                for (var i in res.disk.rows){
+                    newlist.push(res.disk.rows[i].id);
+                    newoption=newoption+'<option value="'+res.disk.rows[i].id+'">'+res.disk.rows[i].model+' '+res.disk.rows[i].sn+'</option>\n'
+                }
+            }
+            $('#j-disk').append(newoption);
+            $('#j-disk').val(newlist);
+            newoption='';
+            newlist=[];
+            if (res.net.num){
+                for (var i in res.net.rows){
+                    newlist.push(res.net.rows[i].id);
+                    newoption=newoption+'<option value="'+res.net.rows[i].id+'">'+res.net.rows[i].model+' '+res.net.rows[i].name+' '+res.net.rows[i].sn+'</option>\n'
+                }
+            }
+            $('#j-net').append(newoption);
+            $('#j-net').val(newlist);
+            newoption='';
+            newlist=[];
+            if (res.otherpart.num){
+                for (var i in res.otherpart.rows){
+                    newlist.push(res.otherpart.rows[i].id);
+                    newoption=newoption+'<option value="'+res.otherpart.rows[i].id+'">'+res.otherpart.rows[i].model+' '+res.otherpart.rows[i].name+' '+res.otherpart.rows[i].sn+'</option>\n'
+                }
+            }
+            $('#j-otherpart').append(newoption);
+            $('#j-otherpart').val(newlist);
+        }
+    });
+    $.ajax({
+        url: '/assetSAPI/',
+        data: {'asset_id': rowdata['id']},
+        type: 'get',
+        success: function (res) {
+            var newlist=[];
+            if(res.os.num){
+                for (var i in res.os.rows) {
+                    newlist.push(res.os.rows[i].id);
+                }
+            }
+            $('#j-os').val(newlist);
+            newlist=[];
+            if(res.app.num){
+                for (var i in res.app.rows) {
+                    newlist.push(res.app.rows[i].id);
+                }
+            }
+            $('#j-app').val(newlist);
+            newlist=[];
+            if(res.middleware.num){
+                for (var i in res.middleware.rows) {
+                    newlist.push(res.middleware.rows[i].id);
+                }
+            }
+            $('#j-middleware').val(newlist);
+            newlist=[];
+            if(res.database.num){
+                for (var i in res.database.rows) {
+                    newlist.push(res.database.rows[i].id);
+                }
+            }
+            $('#j-database').val(newlist);
+        }
+    });
 }
 
+
+
 $('#info_add').click(function () {
+    inithandlediv();
+    makeSHnull();
     $('#j-title').text('新增资产信息');
     $('#info_handle').text('新增');
     $('#detaildiv').attr('style','display: none');
@@ -517,3 +736,71 @@ function lookinfo(index) {
     $('.detailinfo').html(nowstr+endstr);
     $('#detailinfo_index').val(index)
 }
+
+function makesendlist(list) {
+    var new_ids=[];
+    for (var i in list){
+        if ((list[i]!='-1')&&(Number(list[i]))){new_ids.push(Number(list[i]))}
+    }
+    return new_ids
+}
+
+function infohandle(handle,infoid) {
+    var name=$('#j-name').val();
+    var sn=$('#j-sn').val();
+    var manufactor=$('#j-manufactor').val();
+    var price=Number($('#j-price').val());
+    var purchasing_date=$('#j-purchasing_date').val();
+    var warranty_date=$('#j-warranty_date').val();
+    var remarks=$('#j-remarks').val();
+    var assetsclass=Number($('#j-assetsclass').val());
+    var seat=Number($('#j-seat').val());
+    var assets_admin=Number($('#j-assets_admin').val());
+    var business=Number($('#j-business').val());
+    var pact=Number($('#j-pact').val());
+    var cpu=makesendlist($('#j-cpu').val());
+    var mem=makesendlist($('#j-mem').val());
+    var disk=makesendlist($('#j-disk').val());
+    var net=makesendlist($('#j-net').val());
+    var otherpart=makesendlist($('#j-otherpart').val());
+    var os=makesendlist($('#j-os').val());
+    var app=makesendlist($('#j-app').val());
+    var database=makesendlist($('#j-database').val());
+    var middleware=makesendlist($('#j-middleware').val());
+    if (!name) {$('.form_warning').text('资源名称不能为空！');return}
+    if (assetsclass==-1) {$('.form_warning').text('一级分类、二级分类不能为空！');return}
+    if (seat==-1) {$('.form_warning').text('IDC、机架不能为空！');return}
+    var senddata={'name':name,'assetsclass':assetsclass,'seat':seat,'cpu':cpu,'mem':mem,'disk':disk,'net':net,
+    'otherpart':otherpart,'os':os,'app':app,'database':database,'middleware':middleware};
+    if(sn){senddata['sn']=sn}
+    if(manufactor){senddata['manufactor']=manufactor}
+    if(price){senddata['price']=price}
+    if(purchasing_date){senddata['purchasing_date']=purchasing_date}
+    if (warranty_date){senddata['warranty_date']=warranty_date}
+    if (remarks){senddata['remarks']=remarks}
+    if(assets_admin!=-1){senddata['assets_admin']=assets_admin}
+    if (business!=-1){senddata['business']=business}
+    if (pact!=-1){senddata['pact']=pact}
+    if (infoid){senddata['id']=infoid}
+    $.ajax({
+    url:'/assethandleAPI/?method='+handle,
+    contentType:'application/json;charset=utf-8',
+    data:JSON.stringify(senddata),
+    type:'post',
+    success:function (res) {
+        if (res['result']){
+            $('.showdisplay').removeClass('showdisplay');
+            $('#list_table').bootstrapTable('refresh');
+
+        }else {
+            if (handle=='add'){$('.form_warning').text('添加资产失败！')}
+            else {$('.form_warning').text('修改资产失败！')}
+        }
+    }});
+
+}
+
+$('#info_handle').click(function () {
+    if ($('#info_handle').text()=='新增'){infohandle('add')}
+    else {infohandle('change',$('#j-oldid').val())}
+});
